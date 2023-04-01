@@ -1,3 +1,4 @@
+import com.sun.source.tree.AssertTree;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,5 +62,29 @@ class QATest {
 
     @Test
     void main() {
+    }
+    @Test
+    void  testDirection(){
+        int test1 = Project.getDirection(1, "R");
+        assertEquals(4, test1);
+        int test2 = Project.getDirection(2, "R");
+        assertEquals(3, test2);
+        int test3 = Project.getDirection(3, "R");
+        assertEquals(1, test3);
+        int test4 = Project.getDirection(4, "R");
+        assertEquals(2, test4);
+        int test5 = Project.getDirection(1, "L");
+        assertEquals(3, test5);
+        int test6 = Project.getDirection(2, "ABC");
+        assertEquals(4, test6);
+        int test7 = Project.getDirection(3, "ABCDE");
+        assertEquals(2, test7);
+        int test8 = Project.getDirection(4, "U");
+        assertEquals(1, test8);
+        int test9 = Project.getDirection(5, "R");
+        assertEquals(1, test9);
+        int test10 = Project.getDirection(5, "L");
+        assertEquals(1, test10);
+
     }
 }
