@@ -66,19 +66,30 @@ class QATest {
     }
 
     @Test
-    void draw() {
-    }
-
-    @Test
-    void printMyArray() {
+    void stringInputTest() {
+        String input = "I 5\nC\nM 2\nC\nP\nQ";
+        InputStream stream = new ByteArrayInputStream(input.getBytes
+                (Charset.forName("UTF-8")));
+        System.setIn(stream);
+        String expected = "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 2 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "\r\n"+
+                "Enter command: \r\n";
     }
 
     @Test
     void isInputValid() {
-    }
 
-    @Test
-    void main() {
     }
     @Test
     void  testDirection(){
