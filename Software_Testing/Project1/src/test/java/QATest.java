@@ -1,5 +1,7 @@
+
+
 import com.sun.source.tree.AssertTree;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.Project;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -41,7 +44,12 @@ class QATest {
     }
 
     @Test
-    void getDirection() {
+    void getDirectionTest() {
+        int i = 2;
+        String k = "R";
+        int r = Project.getDirection(i,k);
+        int expected = 3;
+        assertEquals(expected,r);
     }
 
     @Test
