@@ -66,7 +66,7 @@ class QATest {
     }
 
     @Test
-    void stringInputTest() {
+    void stringInputTest() throws Exception {
         String input = "I 5\nC\nM 2\nC\nP\nQ";
         InputStream stream = new ByteArrayInputStream(input.getBytes
                 (Charset.forName("UTF-8")));
@@ -85,7 +85,11 @@ class QATest {
                 "                    \n" +
                 "\r\n"+
                 "Enter command: \r\n";
+        String args[] = new String[0];
+        Project.main(args);
+        assertEquals(expected,outContent.toString());
     }
+
 
     @Test
     void isInputValid() {
