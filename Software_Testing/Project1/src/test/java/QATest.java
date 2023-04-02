@@ -62,7 +62,7 @@ class QATest {
         String currentMove = "U";
         int[] expected = {1,2,1,0};
         int[] actual = Project.getCoordinates(outputArray, x, y, currentMove, currentDirection, penState);
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
