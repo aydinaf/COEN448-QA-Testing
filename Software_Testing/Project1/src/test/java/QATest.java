@@ -53,7 +53,16 @@ class QATest {
     }
 
     @Test
-    void getCoordinates() {
+    void getCoordinatesTest() {
+        int x = 1;
+        int y = 2;
+        int currentDirection = 1;
+        int penState = 1;
+        int[][] outputArray = new int[0][];
+        String currentMove = "U";
+        int[] expected = {1,2,1,0};
+        int[] actual = Project.getCoordinates(outputArray, x, y, currentMove, currentDirection, penState);
+        assertEquals(expected, actual);
     }
 
     @Test
