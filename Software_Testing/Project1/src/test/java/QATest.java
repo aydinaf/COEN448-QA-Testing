@@ -41,13 +41,68 @@ class QATest {
     }
 
     @Test
-    void getDirection() {
+    void getDirectionTest() {
+        int i = 2;
+        String k = "R";
+        int r = Project.getDirection(i,k);
+        int expected = 3;
+        assertEquals(expected,r);
     }
 
     @Test
-    void getCoordinates() {
+    void getCoordinatesTest() {
+        int x = 1;
+        int y = 2;
+        int currentDirection = 1;
+        int penState = 1;
+        int[][] outputArray = new int[0][];
+        String currentMove = "U";
+        int[] expected = {1,2,1,0};
+        int[] actual = Project.getCoordinates(outputArray, x, y, currentMove, currentDirection, penState);
+        assertArrayEquals(expected, actual);
     }
 
+
+    @Test
+    void stringInputTest() throws Exception {
+        String input = "I 5\nC\nM 2\nC\nP\nQ";
+        InputStream stream = new ByteArrayInputStream(input.getBytes
+                (Charset.forName("UTF-8")));
+        System.setIn(stream);
+        String expected = "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 2 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "\r\n"+
+                "Enter command: \r\n";
+        String args[] = new String[0];
+        Project.main(args);
+        assertEquals(expected,outContent.toString());
+    }
+
+    //tests initialization state if it's at 0,0
+    @Test
+    void stringInputTest2() throws Exception{
+        String input = "I 10\nC\nQ";
+        InputStream stream = new ByteArrayInputStream(input.getBytes
+                (Charset.forName("UTF-8")));
+        System.setIn(stream);
+        String expected = "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: north\r\n"+
+                "Enter command: \r\n";
+        String args[] = new String[0];
+        Project.main(args);
+        assertEquals(expected, outContent.toString());
+    }
     @Test
     void draw() {
     }
@@ -87,4 +142,11 @@ class QATest {
         assertEquals(1, test10);
 
     }
+
+//    @Test
+//    void testInitialization(){
+//        String[] args = null;
+//        Project.main()
+//
+//    }
 }
