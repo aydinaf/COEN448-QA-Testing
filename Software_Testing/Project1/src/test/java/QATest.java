@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QATest {
@@ -42,26 +43,60 @@ class QATest {
 
     @Test
     void getDirection() {
+        int i = 2;
+        String k = "R";
+        int r = Project.getDirection(i,k);
+        int expected = 3;
+        assertEquals(expected,r);
     }
 
     @Test
     void getCoordinates() {
+        int[][] outputArray = new int[5][5];
+
+        assertArrayEquals(new int[]{0, 0, 1, 0}, Project.getCoordinates(outputArray, 0, 0, "U", 1, 1));
+        assertArrayEquals(new int[]{0, 0, 1, 1}, Project.getCoordinates(outputArray, 0, 0, "D", 1, 0));
+        assertArrayEquals(new int[]{0, 0, 4, 0}, Project.getCoordinates(outputArray, 0, 0, "R", 1, 0));
+        assertArrayEquals(new int[]{0, 0, 3, 0}, Project.getCoordinates(outputArray, 0, 0, "L", 1, 0));
+
+        // Test moving forward when pen is up
+        assertArrayEquals(new int[]{3, 0, 1, 0}, Project.getCoordinates(outputArray, 0, 0, "M 3", 1, 0));
+        // Test moving forward when pen is down
+        assertArrayEquals(new int[]{3, 0, 1, 1}, Project.getCoordinates(outputArray, 0, 0, "M 3", 1, 1));
+        // Test moving forward with invalid move
+        assertArrayEquals(new int[]{0, 0, 1, 0}, Project.getCoordinates(outputArray, 0, 0, "M 6", 1, 0));
     }
 
-    @Test
-    void draw() {
-    }
-
-    @Test
-    void printMyArray() {
-    }
 
     @Test
     void isInputValid() {
+        assertTrue(Project.isInputValid("U"));
+        assertTrue(Project.isInputValid("D"));
+        assertTrue(Project.isInputValid("R"));
+        assertTrue(Project.isInputValid("L"));
+        assertTrue(Project.isInputValid("P"));
+        assertTrue(Project.isInputValid("C"));
+
     }
 
     @Test
-    void main() {
+    void testDraw() {
+        int[][] outputArray = new int[5][5];
+
+        // Draw vertical line
+        Project.draw(outputArray, 1, 2, 0, 0);
+
+        // Expected output
+        int[][] expected1 = new int[][]{{0, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+        assertArrayEquals(expected1, outputArray);
+    }
+
+    @Test
+    public void printMyArray() {
+        int[][] outputArray = new int[][]{{0, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}};
+        String expected = "*         \n" + "*         \n" + "          \n" + "*         \n" + "          \n" + "\r\n";
+        Project.printMyArray(outputArray);
+        assertEquals(expected, outContent.toString());
     }
     @Test
     void  testDirection(){
@@ -86,5 +121,69 @@ class QATest {
         int test10 = Project.getDirection(5, "L");
         assertEquals(1, test10);
 
+    }
+
+    @Test
+    void stringInputTest1() throws Exception {
+        String input = "I 5\nC\nM 2\nC\nP\nQ";
+        InputStream stream = new ByteArrayInputStream(input.getBytes
+                (Charset.forName("UTF-8")));
+        System.setIn(stream);
+        String expected = "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 2 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "          \n" +
+                "\r\n"+
+                "Enter command: \r\n";
+        String args[] = new String[0];
+        Project.main(args);
+        assertEquals(expected,outContent.toString());
+    }
+
+    @Test
+    public void stringInputTest2() throws Exception{
+        String input = "I 10\nL\nC\nM 4\nC\nR\nC\nD\nM 3\nC\nP\nQ";
+        InputStream stream = new ByteArrayInputStream(input.getBytes
+                (Charset.forName("UTF-8")));
+        System.setIn(stream);
+        String expected = "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: west\r\n" +
+                "Enter command: \r\n"+
+                "Out of bound. Please give the input inside the floor bounds.\r\n" +
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: west\r\n" +
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 0 - Pen: up - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Enter command: \r\n"+
+                "Position: 0, 3 - Pen: down - Facing: north\r\n" +
+                "Enter command: \r\n"+
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "                    \n" +
+                "*                   \n" +
+                "*                   \n" +
+                "*                   \n" +
+                "*                   \n" +
+                "\r\n"+
+                "Enter command: \r\n";
+        String args[] = new String[0];
+        Project.main(args);
+        assertEquals(expected, outContent.toString());
     }
 }
